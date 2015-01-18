@@ -33,33 +33,25 @@ import unittest
 class MachineLearningTest(unittest.TestCase):
   def test_tfidf(self):
     """tfidfのテスト"""
-    #urls = ["http://ja.wikipedia.org/wiki/Tf-idf"]
-    urls = [
-      "http://ja.wikipedia.org/w/api.php?format=xml&action=query&prop=revisions&titles=沖縄県&rvprop=content",
-      "http://ja.wikipedia.org/w/api.php?format=xml&action=query&prop=revisions&titles=茨城県&rvprop=content",
-      "http://ja.wikipedia.org/w/api.php?format=xml&action=query&prop=revisions&titles=栃木県&rvprop=content",
-      "http://ja.wikipedia.org/w/api.php?format=xml&action=query&prop=revisions&titles=群馬県&rvprop=content",
-      "http://ja.wikipedia.org/w/api.php?format=xml&action=query&prop=revisions&titles=埼玉県&rvprop=content",
-      "http://ja.wikipedia.org/w/api.php?format=xml&action=query&prop=revisions&titles=千葉県&rvprop=content",
-      "http://ja.wikipedia.org/w/api.php?format=xml&action=query&prop=revisions&titles=東京都&rvprop=content",
-      "http://ja.wikipedia.org/w/api.php?format=xml&action=query&prop=revisions&titles=神奈川県&rvprop=content"
-    ]
-    def url2words(url):
-      try:
-        html = urllib2.urlopen(url).read()
-      except HTTPError:
-        html = ""
-      soup = BeautifulSoup(html)
-      plain_text = soup.get_text().encode("utf-8")
+    def url2words(num):
+      plain_text = open("47area/area_" + str(num) + "/AA/wiki_00", "r").read()
+      #try:
+      #  html = urllib2.urlopen(url).read()
+      #except HTTPError:
+      #  html = ""
+      #soup = BeautifulSoup(html)
+      #plain_text = soup.get_text().encode("utf-8")
       words = extract_words(plain_text)
       return words
-    docs = [url2words(url) for url in urls]
-    print len(docs)
-    tfidfs = tfidf(docs[0],docs)
-    tfidfs.sort(cmp=lambda x,y:cmp(x["tfidf"],y["tfidf"]),reverse=True)
-    result = [e for i,e in enumerate(tfidfs) if len(e["word"]) > 2 and i < 30]
-    for r in result:
-      print "{ word : %s, tfidf : %s }" % (r["word"], r["tfidf"])
+    docs = [url2words(i) for i in range(1, 48)]
+    #docs = [url2words(url) for url in urls]
+    for i in range(0,len(docs)):
+      tfidfs = tfidf(docs[i],docs)
+      tfidfs.sort(cmp=lambda x,y:cmp(x["tfidf"],y["tfidf"]),reverse=True)
+      result = [e for i,e in enumerate(tfidfs)]
+      for r in result:
+        print "{ word : %s, tfidf : %s }" % (r["word"], r["tfidf"])
+      print "------------------------"
 
 if __name__ == '__main__':
   unittest.main()
