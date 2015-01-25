@@ -1,0 +1,8 @@
+[概要]
+47都道府県のwikipediaからプレーンテキストを抽出.
+それぞれのTF-IDFを算出.
+
+[フロー]
+1. xml_47area: ここに47都道府県のwikipedia xml抽出用APIを記載
+2. get_plane_text: 実行. プレーンテキストが47areasディレクトリ内に格納
+3. tf_idf.py > result: 実行. 1時間ほどでTF-IDFを算出

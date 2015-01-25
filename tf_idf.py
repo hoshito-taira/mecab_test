@@ -36,13 +36,14 @@ def extract_words(text):
     node = node.next
   return words
 
+# 標準出力でTF-IDFを返却
 if __name__ == '__main__':
-  def url2words(num):
+  def url_words(num):
     plain_text = open("47area/area_" + str(num) + "/AA/wiki_00", "r").read()
     words = extract_words(plain_text)
     return words
 
-  docs = [url2words(i) for i in range(1, 48)]
+  docs = [url_words(i) for i in range(1, 48)]
   print "{["
   c_flag = True
   for i in range(0,len(docs)):
